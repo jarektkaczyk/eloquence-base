@@ -55,6 +55,16 @@ class BuilderTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('select * from "table" where "foo" = ?', $sql);
     }
 
+    /**
+     * @test
+     */
+    public function it_passes_thru_getConncetion_method()
+    {
+        $builder = $this->getBuilder();
+
+        $this->assertInstanceOf('\Illuminate\Database\ConnectionInterface', $builder->getConnection());
+    }
+
     protected function getBuilder()
     {
         $grammar    = new \Illuminate\Database\Query\Grammars\Grammar;
