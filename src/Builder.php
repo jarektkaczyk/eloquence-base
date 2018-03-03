@@ -145,7 +145,7 @@ class Builder extends HookableBuilder
             $this->searchWhere($subquery, $columns, $words, $whereBindings);
         }
 
-        $this->query->where('relevance', '>=', new Expression($threshold));
+        $this->query->where('relevance', '>=', new Expression(number_format($threshold, 2)));
 
         $this->query->orders = array_merge(
             [['column' => 'relevance', 'direction' => 'desc']],

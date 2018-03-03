@@ -35,7 +35,7 @@ class SearchableBuilderTest extends \PHPUnit_Framework_TestCase {
     {
         $sql = 'select * from (select `users`.*, max(case when `users`.`last_name` = ? then 150 else 0 end) '.
                'as relevance from `users` where (`users`.`last_name` like ?) '.
-               'group by `users`.`primary_key`) as `users` where `relevance` >= 2.5 order by `relevance` desc';
+               'group by `users`.`primary_key`) as `users` where `relevance` >= 2.50 order by `relevance` desc';
 
         $bindings = ['jaros_aw', 'jaros_aw'];
 
@@ -157,7 +157,7 @@ class SearchableBuilderTest extends \PHPUnit_Framework_TestCase {
                '+ case when `profiles`.`name` = ? then 15 else 0 end) as relevance '.
                'from `users` left join `profiles` on `users`.`profile_id` = `profiles`.`id` '.
                'where (`users`.`first_name` like ? or `profiles`.`name` like ?) group by `users`.`primary_key`) '.
-               'as `users` where `relevance` >= 0.5 order by `relevance` desc, `first_name` asc';
+               'as `users` where `relevance` >= 0.50 order by `relevance` desc, `first_name` asc';
 
         $bindings = ['jarek', 'jarek', 'jarek', 'jarek'];
 
@@ -176,7 +176,7 @@ class SearchableBuilderTest extends \PHPUnit_Framework_TestCase {
                  '+ case when `users`.`last_name` like ? then 50 else 0 end '.
                  '+ case when `users`.`last_name` like ? then 10 else 0 end) '.
                  'as relevance from `users` where (`users`.`last_name` like ?) '.
-                 'group by `users`.`primary_key`) as `users` where `relevance` >= 2.5';
+                 'group by `users`.`primary_key`) as `users` where `relevance` >= 2.50';
 
         $bindings = ['jarek', 'jarek%', '%jarek%', '%jarek%'];
 
@@ -195,7 +195,7 @@ class SearchableBuilderTest extends \PHPUnit_Framework_TestCase {
                '+ case when "users"."last_name" ilike ? then 50 else 0 end '.
                '+ case when "users"."last_name" ilike ? then 10 else 0 end) '.
                'as relevance from "users" where ("users"."last_name" ilike ?) '.
-               'group by "users"."primary_key") as "users" where "relevance" >= 2.5 order by "relevance" desc';
+               'group by "users"."primary_key") as "users" where "relevance" >= 2.50 order by "relevance" desc';
 
         $bindings = ['jarek', 'jarek%', '%jarek%', '%jarek%'];
 
@@ -228,7 +228,7 @@ class SearchableBuilderTest extends \PHPUnit_Framework_TestCase {
                '+ case when `users`.`last_name` like ? then 50 else 0 end '.
                '+ case when `users`.`last_name` like ? then 10 else 0 end) '.
                'as relevance from `users` where (`users`.`last_name` like ?) '.
-               'group by `users`.`primary_key`) as `users` where `relevance` >= 2.5 order by `relevance` desc';
+               'group by `users`.`primary_key`) as `users` where `relevance` >= 2.50 order by `relevance` desc';
 
         $bindings = ['jarek', 'jarek%', '%jarek%', '%jarek%'];
 
@@ -301,7 +301,7 @@ class SearchableBuilderTest extends \PHPUnit_Framework_TestCase {
                'as relevance from `users` left join `profiles` on `users`.`profile_id` = `profiles`.`id` '.
                'where (`users`.`first_name` like ? or `users`.`first_name` like ? or `users`.`last_name` like ? or `users`.`last_name` like ? '.
                'or `users`.`email` like ? or `users`.`email` like ? or `profiles`.`name` like ? or `profiles`.`name` like ?) '.
-               'group by `users`.`primary_key`) as `users` where `relevance` >= 4.5 order by `relevance` desc';
+               'group by `users`.`primary_key`) as `users` where `relevance` >= 4.50 order by `relevance` desc';
 
         $bindings = [
             'jarek', 'tkaczyk', 'jarek', 'tkaczyk', 'jarek', 'tkaczyk', 'jarek', 'tkaczyk',
