@@ -24,8 +24,8 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "sofa/hookable": "5.5.*",
-        "illuminate/database": "5.5.*|5.6.*"
+        "sofa/hookable": "^5.5",
+        "illuminate/database": "^5.5"
     },
     "require-dev": {
         "phpunit/phpunit": "4.5.0",
