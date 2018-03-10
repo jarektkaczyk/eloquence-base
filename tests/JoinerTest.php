@@ -94,13 +94,13 @@ class JoinerTest extends \PHPUnit_Framework_TestCase {
     public function it_joins_nested_relations_with_soft_delete()
     {
         $sql = 'select * from "users" '.
-            'inner join "posts" on "users"."id" = "posts"."user_id" and "posts"."deleted_at" is null '.
-            'inner join "comments" on "posts"."id" = "comments"."post_id" ';
+            'inner join "posts" on "posts"."user_id" = "users"."id" and "posts"."deleted_at" is null '.
+            'inner join "comments" on "comments"."post_id" = "posts"."id"';
 
         $query = $this->getQuery();
         $joiner = $this->factory->make($query);
 
-        $joiner->join('posts.comments');
+        $joiner->join('softDeletingPosts.comments');
 
         $this->assertEquals($sql, $query->toSql());
     }
@@ -148,6 +148,11 @@ class JoinerUserStub extends Model {
         return $this->hasMany('Sofa\Eloquence\Tests\JoinerPostStub', 'user_id');
     }
 
+    public function softDeletingPosts()
+    {
+        return $this->hasMany('Sofa\Eloquence\Tests\JoinerSoftDeletingStub', 'user_id');
+    }
+
     public function morphed()
     {
         return $this->morphOne('Sofa\Eloquence\Tests\MorphOneStub');
@@ -173,6 +178,10 @@ class JoinerCompanyStub extends Model {
 }
 
 class JoinerPostStub extends Model {
+    protected $table = 'posts';
+}
+
+class JoinerSoftDeletingStub extends Model {
     use SoftDeletes;
 
     protected $table = 'posts';

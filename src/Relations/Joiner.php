@@ -5,6 +5,7 @@ namespace Sofa\Eloquence\Relations;
 use LogicException;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\JoinClause as Join;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -133,6 +134,10 @@ class Joiner implements JoinerContract
         list($fk, $pk) = $this->getJoinKeys($relation);
 
         $join = (new Join($this->query, $type, $table))->on($fk, '=', $pk);
+
+        if (in_array(SoftDeletes::class, class_uses_recursive($relation->getRelated()))) {
+            $join->whereNull($relation->getRelated()->getQualifiedDeletedAtColumn());
+        }
 
         if ($relation instanceof MorphOneOrMany) {
             $join->where($relation->getQualifiedMorphType(), '=', $parent->getMorphClass());
