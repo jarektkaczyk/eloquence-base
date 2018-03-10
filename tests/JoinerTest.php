@@ -2,6 +2,7 @@
 
 namespace Sofa\Eloquence\Tests;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as Query;
 use Illuminate\Database\Query\Grammars\Grammar;
 use Illuminate\Database\Eloquent\Model;
@@ -87,6 +88,23 @@ class JoinerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($sql, $query->toSql());
     }
 
+    /**
+     * @test
+     */
+    public function it_joins_nested_relations_with_soft_delete()
+    {
+        $sql = 'select * from "users" '.
+            'inner join "posts" on "users"."id" = "posts"."user_id" and "posts"."deleted_at" is null '.
+            'inner join "comments" on "posts"."id" = "comments"."post_id" ';
+
+        $query = $this->getQuery();
+        $joiner = $this->factory->make($query);
+
+        $joiner->join('posts.comments');
+
+        $this->assertEquals($sql, $query->toSql());
+    }
+
     public function getQuery()
     {
         $model = new JoinerUserStub;
@@ -155,7 +173,18 @@ class JoinerCompanyStub extends Model {
 }
 
 class JoinerPostStub extends Model {
+    use SoftDeletes;
+
     protected $table = 'posts';
+
+    public function comments()
+    {
+        return $this->hasMany('Sofa\Eloquence\Tests\JoinerCommentStub', 'post_id');
+    }
+}
+
+class JoinerCommentStub extends Model {
+    protected $table = 'comments';
 }
 
 class MorphOneStub extends Model {
