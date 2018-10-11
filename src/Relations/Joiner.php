@@ -10,6 +10,8 @@ use Illuminate\Database\Query\JoinClause as Join;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\MorphByMany;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -141,6 +143,8 @@ class Joiner implements JoinerContract
 
         if ($relation instanceof MorphOneOrMany) {
             $join->where($relation->getQualifiedMorphType(), '=', $parent->getMorphClass());
+        } elseif ($relation instanceof MorphToMany || $relation instanceof MorphByMany) {
+            $join->where($relation->getMorphType(), '=', $parent->getMorphClass());
         }
 
         return $join;
