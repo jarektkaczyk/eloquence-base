@@ -41,6 +41,24 @@ class JoinerTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @test
+     */
+    public function it_joins_morph_to_many_relations()
+    {
+      $sql = 'select * from "users" '.
+        'inner join "profiles" on "users"."profile_id" = "profiles"."id" '.
+        'inner join "taggables" on "taggables"."taggable_id" = "profiles"."id" '.
+        'inner join "tags" on "taggables"."joiner_tag_stub_id" = "tags"."id" and "taggable_type" = ?';
+
+      $query = $this->getQuery();
+      $joiner = $this->factory->make($query);
+
+      $joiner->join('profile.tags');
+
+      $this->assertEquals($sql, $query->toSql());
+    }
+
+    /**
+     * @test
      *
      * @expectedException \LogicException
      */
@@ -171,6 +189,11 @@ class JoinerProfileStub extends Model {
     {
         return $this->morphOne('Sofa\Eloquence\Tests\JoinerCompanyStub', 'morphable');
     }
+
+    public function tags()
+    {
+      return $this->morphToMany('Sofa\Eloquence\Tests\JoinerTagStub', 'taggable');
+    }
 }
 
 class JoinerCompanyStub extends Model {
@@ -198,4 +221,14 @@ class JoinerCommentStub extends Model {
 
 class MorphOneStub extends Model {
     protected $table = 'morphs';
+}
+
+class JoinerTagStub extends Model
+{
+  protected $table = 'tags';
+
+  public function profiles()
+  {
+    return $this->morphedByMany('Sofa\Eloquence\Tests\JoinerProfileStub', 'taggable');
+  }
 }
