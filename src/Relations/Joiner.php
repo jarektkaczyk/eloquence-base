@@ -194,7 +194,10 @@ class Joiner implements JoinerContract
         }
 
         if ($relation instanceof BelongsTo) {
-            return [$relation->getQualifiedForeignKeyName(), $relation->getQualifiedOwnerKeyName()];
+            $qualifiedForeighKeyName = method_exists($relation, 'getQualifiedForeignKeyName') ?
+                $relation->getQualifiedForeignKeyName() : $relation->getQualifiedForeignKey();
+
+            return [$qualifiedForeighKeyName, $relation->getQualifiedOwnerKeyName()];
         }
 
         if ($relation instanceof BelongsToMany) {
