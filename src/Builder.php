@@ -2,14 +2,15 @@
 
 namespace Sofa\Eloquence;
 
-use Sofa\Eloquence\Searchable\Column;
 use Illuminate\Database\Query\Expression;
-use Sofa\Hookable\Builder as HookableBuilder;
-use Sofa\Eloquence\Searchable\ColumnCollection;
+use Illuminate\Database\Query\Grammars\PostgresGrammar;
+use Illuminate\Support\Str;
 use Sofa\Eloquence\Contracts\Relations\JoinerFactory;
 use Sofa\Eloquence\Contracts\Searchable\ParserFactory;
-use Illuminate\Database\Query\Grammars\PostgresGrammar;
+use Sofa\Eloquence\Searchable\Column;
+use Sofa\Eloquence\Searchable\ColumnCollection;
 use Sofa\Eloquence\Searchable\Subquery as SearchableSubquery;
+use Sofa\Hookable\Builder as HookableBuilder;
 
 /**
  * @method $this leftJoin($table, $one, $operator, $two)
@@ -102,12 +103,12 @@ class Builder extends HookableBuilder
         $columns = $this->joinForSearch($mappings, $subquery);
 
         $threshold = (is_null($threshold))
-                        ? array_sum($columns->getWeights()) / 4
-                        : (float) $threshold;
+            ? array_sum($columns->getWeights()) / 4
+            : (float) $threshold;
 
         $subquery->select($this->model->getTable() . '.*')
-                 ->from($this->model->getTable())
-                 ->groupBy($this->model->getQualifiedKeyName());
+            ->from($this->model->getTable())
+            ->groupBy($this->model->getQualifiedKeyName());
 
         $this->addSearchClauses($subquery, $columns, $words, $threshold);
 
@@ -250,9 +251,9 @@ class Builder extends HookableBuilder
 
                 $this->query->addBinding($bindings, 'select');
 
-            // if where is not to be moved onto the subquery, let's increment
-            // binding key appropriately, so we can reliably move binding
-            // for the next where clauses in the loop that is running.
+                // if where is not to be moved onto the subquery, let's increment
+                // binding key appropriately, so we can reliably move binding
+                // for the next where clauses in the loop that is running.
             } else {
                 $bindingKey += $bindingsCount;
             }
@@ -297,8 +298,8 @@ class Builder extends HookableBuilder
     protected function isHasWhere($where, $type)
     {
         return $type === 'basic'
-                && $where['column'] instanceof Expression
-                && $where['value'] instanceof Expression;
+            && $where['column'] instanceof Expression
+            && $where['value'] instanceof Expression;
     }
 
     /**
@@ -393,7 +394,7 @@ class Builder extends HookableBuilder
      */
     protected function isLeftMatching($word)
     {
-        return ends_with($word, '*');
+        return Str::endsWith($word, '*');
     }
 
     /**
@@ -404,7 +405,7 @@ class Builder extends HookableBuilder
      */
     protected function isWildcard($word)
     {
-        return ends_with($word, '*') && starts_with($word, '*');
+        return Str::endsWith($word, '*') && Str::startsWith($word, '*');
     }
 
     /**
