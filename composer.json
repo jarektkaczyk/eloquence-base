@@ -1,5 +1,5 @@
 {
-    "name": "sofa/eloquence-base",
+    "name": "notf0und/eloquence-base",
     "description": "Flexible Searchable, Mappable, Metable, Validation and more extensions for Laravel Eloquent ORM.",
     "license": "MIT",
     "support": {
