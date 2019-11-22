@@ -2,8 +2,6 @@
 
 namespace Sofa\Eloquence\Tests;
 
-use Illuminate\Database\Query\Builder as Query;
-use Illuminate\Database\Query\Grammars\Grammar;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +14,8 @@ use Sofa\Eloquence\Builder;
 use Mockery as m;
 
 class SearchableBuilderTest extends \PHPUnit_Framework_TestCase {
+
+    use LaravelCompatibilityTrait;
 
     public function setUp()
     {
@@ -344,6 +344,7 @@ class SearchableBuilderTest extends \PHPUnit_Framework_TestCase {
         $connection = m::mock('Illuminate\Database\ConnectionInterface', ['getQueryGrammar' => $grammar, 'getPostProcessor' => $processor]);
         $connection->shouldReceive('getSchemaBuilder')->andReturn($schema);
         $connection->shouldReceive('getName')->andReturn($driver);
+        $this->supportLaravel58($connection);
         $resolver = m::mock('Illuminate\Database\ConnectionResolverInterface', ['connection' => $connection]);
         $class = get_class($model);
         $class::setConnectionResolver($resolver);

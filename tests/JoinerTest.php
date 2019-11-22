@@ -3,14 +3,14 @@
 namespace Sofa\Eloquence\Tests;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Query\Builder as Query;
-use Illuminate\Database\Query\Grammars\Grammar;
 use Illuminate\Database\Eloquent\Model;
 use Sofa\Eloquence\Relations\JoinerFactory;
 
 use Mockery as m;
 
 class JoinerTest extends \PHPUnit_Framework_TestCase {
+
+    use LaravelCompatibilityTrait;
 
     public function setUp()
     {
@@ -132,6 +132,7 @@ class JoinerTest extends \PHPUnit_Framework_TestCase {
         $processor = new $processorClass;
         $schema = m::mock('StdClass');
         $connection = m::mock('Illuminate\Database\ConnectionInterface', ['getQueryGrammar' => $grammar, 'getPostProcessor' => $processor]);
+        $this->supportLaravel58($connection);
         $resolver = m::mock('Illuminate\Database\ConnectionResolverInterface', ['connection' => $connection]);
         $class = get_class($model);
         $class::setConnectionResolver($resolver);

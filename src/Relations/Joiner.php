@@ -194,6 +194,11 @@ class Joiner implements JoinerContract
         }
 
         if ($relation instanceof BelongsTo) {
+            // FIXME: Delete this branch of code when dropping support for Laravel 5.7
+            if (method_exists($relation, 'getQualifiedForeignKey')) {
+                return [$relation->getQualifiedForeignKey(), $relation->getQualifiedOwnerKeyName()];
+            }
+
             return [$relation->getQualifiedForeignKeyName(), $relation->getQualifiedOwnerKeyName()];
         }
 
