@@ -1,20 +1,43 @@
 language: php
 
-php:
-  - 7.2
-  - 7.3
+sudo: false
+
+cache:
+  directories:
+    - "$HOME/.composer/cache"
+
+before_install:
+  - travis_retry composer self-update
 
 install:
-  - travis_retry composer require satooshi/php-coveralls:~0.6@stable
+  - |
+    travis_retry composer require \
+      illuminate/database:$LARAVEL_VERSION \
+      illuminate/container:$LARAVEL_VERSION \
+      illuminate/contracts:$LARAVEL_VERSION \
+      illuminate/support:$LARAVEL_VERSION \
+      --no-interaction --prefer-dist --no-suggest --profile
 
-before_script:
-  - mkdir -p build/logs
-  - travis_retry composer self-update
-  - travis_retry composer install --prefer-source --no-interaction --dev
+jobs:
+  fast_finish: true
+  include:
+    - php: 7.1
+      env: LARAVEL_VERSION=5.7
+    - php: 7.1
+      env: LARAVEL_VERSION=5.8
+    - php: 7.2
+      env: LARAVEL_VERSION=5.7
+    - php: 7.2
+      env: LARAVEL_VERSION=5.8
+    - php: 7.2
+      env: LARAVEL_VERSION=6.0
+    - php: 7.3
+      env: LARAVEL_VERSION=5.7
+    - php: 7.3
+      env: LARAVEL_VERSION=5.8
+    - php: 7.3
+      env: LARAVEL_VERSION=6.0
 
 script:
-  - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-  - ./vendor/bin/phpcs src --standard=psr2
-
-after_success:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
+  - vendor/bin/phpunit
+  - vendor/bin/phpcs --standard=PSR2 src --report=summary -n
