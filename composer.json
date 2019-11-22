@@ -1,10 +1,10 @@
 {
-    "name": "sofa/eloquence-base",
+    "name": "netsells/eloquence-base",
     "description": "Flexible Searchable, Mappable, Metable, Validation and more extensions for Laravel Eloquent ORM.",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/jarektkaczyk/eloquence-base/issues",
-        "source": "https://github.com/jarektkaczyk/eloquence-base"
+        "issues": "https://github.com/netsells/eloquence-base/issues",
+        "source": "https://github.com/netsells/eloquence-base"
     },
     "keywords": [
         "laravel",
