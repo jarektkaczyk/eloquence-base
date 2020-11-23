@@ -14,9 +14,7 @@ class Observer
      */
     public function saving($model)
     {
-        if ($model instanceof CleansAttributes) {
-            $this->cleanAttributes($model);
-        }
+        $this->cleanAttributes($model);
     }
 
     /**
