@@ -13,6 +13,8 @@ jobs:
         dependency-version: [prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
+    env:
+      COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout code
@@ -33,10 +35,10 @@ jobs:
       - name: Install dependencies
         run: |
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
-          composer require satooshi/php-coveralls:~0.6@stable
           mkdir -p build/logs
 
       - name: Execute tests
         run: |
           vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-          vendor/bin/coveralls -v
+          composer global require php-coveralls/php-coveralls
+          php-coveralls --coverage_clover=build/logs/clover.xml -v
