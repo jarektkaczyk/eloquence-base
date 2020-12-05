@@ -33,6 +33,10 @@ jobs:
       - name: Install dependencies
         run: |
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
+          composer require satooshi/php-coveralls:~0.6@stable
+          mkdir -p build/logs
 
       - name: Execute tests
-        run: vendor/bin/phpunit --coverage-text
+        run: |
+          vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+          vendor/bin/coveralls -v
