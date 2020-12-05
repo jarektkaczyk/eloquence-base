@@ -6,7 +6,7 @@ use Illuminate\Database\Grammar;
 
 class Column
 {
-    /** @var \Illuminate\Database\Grammar */
+    /** @var Grammar */
     protected $grammar;
 
     /** @var string */
@@ -18,7 +18,7 @@ class Column
     /** @var string */
     protected $mapping;
 
-    /** @var integer */
+    /** @var int */
     protected $weight;
 
     /**
@@ -27,15 +27,15 @@ class Column
      * @param string  $table
      * @param string  $name
      * @param string  $mapping
-     * @param integer $weight
+     * @param int $weight
      */
     public function __construct(Grammar $grammar, $table, $name, $mapping, $weight = 1)
     {
         $this->grammar = $grammar;
-        $this->table   = $table;
-        $this->name    = $name;
+        $this->table = $table;
+        $this->name = $name;
         $this->mapping = $mapping;
-        $this->weight  = $weight;
+        $this->weight = $weight;
     }
 
     /**
@@ -55,7 +55,7 @@ class Column
      */
     public function getQualifiedName()
     {
-        return $this->getTable().'.'.$this->getName();
+        return $this->getTable() . '.' . $this->getName();
     }
 
     /**
@@ -83,7 +83,7 @@ class Column
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getWeight()
     {

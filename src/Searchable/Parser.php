@@ -9,7 +9,7 @@ class Parser implements ParserContract
     /**
      * Default search weight.
      *
-     * @var integer
+     * @var int
      */
     protected $weight;
 
@@ -23,11 +23,11 @@ class Parser implements ParserContract
     /**
      * Create new parser instance.
      *
-     * @param integer $weight
+     * @param int $weight
      */
     public function __construct($weight = 1, $wildcard = '*')
     {
-        $this->weight   = $weight;
+        $this->weight = $weight;
         $this->wildcard = $wildcard;
     }
 
@@ -81,7 +81,7 @@ class Parser implements ParserContract
      * Parse query string into separate words with wildcards if applicable.
      *
      * @param  string  $query
-     * @param  boolean $fulltext
+     * @param  bool $fulltext
      * @return array
      */
     public function parseQuery($query, $fulltext = true)

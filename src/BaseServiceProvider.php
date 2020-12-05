@@ -2,7 +2,6 @@
 
 namespace Sofa\Eloquence;
 
-use Sofa\Eloquence\Builder;
 use Sofa\Eloquence\Relations\JoinerFactory;
 use Sofa\Eloquence\Searchable\ParserFactory;
 use Illuminate\Support\ServiceProvider as BaseProvider;

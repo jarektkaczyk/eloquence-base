@@ -48,7 +48,7 @@ trait Eloquence
      *
      * @param  string $method
      * @param  ArgumentBag $args
-     * @return boolean
+     * @return bool
      */
     protected function isWhereNull($method, ArgumentBag $args)
     {
@@ -59,7 +59,7 @@ trait Eloquence
      * Determine whether where is a whereNull by the arguments passed to where method.
      *
      * @param  ArgumentBag $args
-     * @return boolean
+     * @return bool
      */
     protected function isWhereNullByArgs(ArgumentBag $args)
     {
@@ -105,7 +105,7 @@ trait Eloquence
      * Determine whether the key is meta attribute or actual table field.
      *
      * @param  string  $key
-     * @return boolean
+     * @return bool
      */
     public static function hasColumn($key)
     {
@@ -155,8 +155,8 @@ trait Eloquence
     /**
      * Create new Eloquence query builder for the instance.
      *
-     * @param  \Sofa\Eloquence\Query\Builder $query
-     * @return \Sofa\Eloquence\Builder
+     * @param QueryBuilder $query
+     * @return Builder
      */
     public function newEloquentBuilder($query)
     {
@@ -166,7 +166,7 @@ trait Eloquence
     /**
      * Get a new query builder instance for the connection.
      *
-     * @return \Sofa\Eloquence\Query\Builder
+     * @return QueryBuilder
      */
     protected function newBaseQueryBuilder()
     {

@@ -2,24 +2,18 @@
 
 namespace Sofa\Eloquence\Tests;
 
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Query\Grammars\SQLiteGrammar;
 use Sofa\Eloquence\Subquery;
 
-use Mockery as m;
-
-class SubqueryTest extends \PHPUnit_Framework_TestCase {
-
-    public function tearDown()
-    {
-        m::close();
-    }
-
-    /**
-     * @test
-     */
+class SubqueryTest extends TestCase
+{
+    /** @test */
     public function it_forwards_calls_to_the_builder()
     {
-        $builder = m::mock('\Illuminate\Database\Query\Builder');
-        $builder->shouldReceive('where')->once()->with('foo', 'bar')->andReturn($builder);
+        $builder = $this->createMock(Builder::class);
+        $builder->expects($this->once())->method('where')->with('foo', 'bar')->willReturnSelf();
 
         $sub = new Subquery($builder);
         $sub->from = 'table';
@@ -30,17 +24,14 @@ class SubqueryTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('table', $sub->from);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_prints_as_aliased_query_in_parentheses()
     {
-        $grammar = m::mock('StdClass');
-        $grammar->shouldReceive('wrapTable')->with('table_alias')->once()->andReturn('"table_alias"');
-        $builder = m::mock('\Illuminate\Database\Query\Builder');
-        $builder->shouldReceive('getGrammar')->once()->andReturn($grammar);
+        $grammar = new SQLiteGrammar();
+        $builder = $this->createMock(Builder::class);
+        $builder->method('getGrammar')->willReturn($grammar);
+        $builder->method('toSql')->willReturn('select * from "table" where id = ?');
         $sub = new Subquery($builder);
-        $sub->getQuery()->shouldReceive('toSql')->andReturn('select * from "table" where id = ?');
 
         $this->assertEquals('(select * from "table" where id = ?)', (string) $sub);
 
@@ -50,16 +41,14 @@ class SubqueryTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('table_alias', $sub->getAlias());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_accepts_eloquent_and_query_builder()
     {
-        $builder = m::mock('\Illuminate\Database\Query\Builder');
-        $sub = new Subquery($builder);
+        $builder = $this->createMock(Builder::class);
+        new Subquery($builder);
 
-        $eloquent = m::mock('\Illuminate\Database\Eloquent\Builder');
-        $eloquent->shouldReceive('getQuery')->andReturn($builder);
-        $sub = new Subquery($eloquent);
+        $eloquent = $this->createMock(EloquentBuilder::class);
+        $eloquent->expects($this->once())->method('getQuery')->willReturn($builder);
+        new Subquery($eloquent);
     }
 }

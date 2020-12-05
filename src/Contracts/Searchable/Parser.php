@@ -8,7 +8,7 @@ interface Parser
      * Parse query string into separate words with wildcards if applicable.
      *
      * @param  string  $query
-     * @param  boolean $fulltext
+     * @param  bool $fulltext
      * @return array
      */
     public function parseQuery($query, $fulltext = true);

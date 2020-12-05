@@ -22,7 +22,7 @@ class Observer
     /**
      * Get rid of attributes that are not correct columns on this model's table.
      *
-     * @param  \Sofa\Eloquence\Contracts\CleansAttributes $model
+     * @param CleansAttributes $model
      * @return void
      */
     protected function cleanAttributes(CleansAttributes $model)

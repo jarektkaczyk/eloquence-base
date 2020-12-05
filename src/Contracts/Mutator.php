@@ -2,6 +2,8 @@
 
 namespace Sofa\Eloquence\Contracts;
 
+use LogicException;
+
 interface Mutator
 {
     /**
@@ -11,7 +13,7 @@ interface Mutator
      * @param  string|array $mutators
      * @return mixed
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     public function mutate($value, $mutators);
 }
