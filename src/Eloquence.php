@@ -7,6 +7,7 @@ use Sofa\Hookable\Hookable;
 use Sofa\Hookable\Contracts\ArgumentBag;
 use Sofa\Eloquence\Query\Builder as QueryBuilder;
 use Sofa\Eloquence\AttributeCleaner\Observer as AttributeCleaner;
+use Sofa\Eloquence\Contracts\CleansAttributes;
 
 /**
  * This trait is an entry point for all the hooks that we want to apply
@@ -40,7 +41,9 @@ trait Eloquence
      */
     public static function bootEloquence()
     {
-        static::observe(new AttributeCleaner);
+        if (is_subclass_of(static::class, CleansAttributes::class)) {
+            static::observe(new AttributeCleaner);
+        }
     }
 
     /**
