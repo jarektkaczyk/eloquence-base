@@ -1,6 +1,6 @@
 # Sofa/Eloquence
 
-[![Build Status](https://travis-ci.org/jarektkaczyk/eloquence-base.svg)](https://travis-ci.org/jarektkaczyk/eloquence-base) [![Coverage Status](https://coveralls.io/repos/jarektkaczyk/eloquence-base/badge.svg)](https://coveralls.io/r/jarektkaczyk/eloquence-base) [![Code Quality](https://scrutinizer-ci.com/g/jarektkaczyk/eloquence-base/badges/quality-score.png)](https://scrutinizer-ci.com/g/jarektkaczyk/eloquence-base) [![Downloads](https://poser.pugx.org/sofa/eloquence-base/downloads)](https://packagist.org/packages/sofa/eloquence-base) [![stable](https://poser.pugx.org/sofa/eloquence-base/v/stable.svg)](https://packagist.org/packages/sofa/eloquence-base)
+[![GitHub Tests Action Status](https://github.com/jarektkaczyk/eloquence-base/workflows/Tests/badge.svg)](https://github.com/jarektkaczyk/eloquence-base/actions?query=workflow%3Atests+branch%3Amaster) [![Coverage Status](https://coveralls.io/repos/jarektkaczyk/eloquence-base/badge.svg)](https://coveralls.io/r/jarektkaczyk/eloquence-base) [![Code Quality](https://scrutinizer-ci.com/g/jarektkaczyk/eloquence-base/badges/quality-score.png)](https://scrutinizer-ci.com/g/jarektkaczyk/eloquence-base) [![Downloads](https://poser.pugx.org/sofa/eloquence-base/downloads)](https://packagist.org/packages/sofa/eloquence-base) [![stable](https://poser.pugx.org/sofa/eloquence-base/v/stable.svg)](https://packagist.org/packages/sofa/eloquence-base)
 
 Easy and flexible extensions for the [Eloquent ORM](https://laravel.com/docs/eloquent).
 
