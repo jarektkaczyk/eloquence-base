@@ -40,7 +40,7 @@ class JoinerTest extends TestCase
         $sql = 'select * from "users" ' .
         'inner join "profiles" on "users"."profile_id" = "profiles"."id" ' .
         'inner join "taggables" on "taggables"."taggable_id" = "profiles"."id" ' .
-        'inner join "tags" on "taggables"."joiner_tag_stub_id" = "tags"."id" and "taggable_type" = ?';
+        'inner join "tags" on "taggables"."joiner_tag_stub_id" = "tags"."id" and "taggables"."taggable_type" = ?';
 
         $query = $this->getQuery();
         $joiner = $this->factory->make($query);
